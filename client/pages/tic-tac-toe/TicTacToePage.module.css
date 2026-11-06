@@ -1,0 +1,54 @@
+
+.page {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 32px 16px;
+  text-align: center;
+}
+
+.status {
+  margin: 24px 0;
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.board {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  width: min(100%, 330px);
+  margin: 0 auto 24px;
+}
+
+.cell {
+  aspect-ratio: 1;
+  border: 2px solid #888;
+  border-radius: 8px;
+  background: transparent;
+  color: inherit;
+  font-size: 2.5rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.cell:disabled {
+  cursor: default;
+}
+
+.cell:focus-visible {
+  outline: 3px solid #2563eb;
+  outline-offset: 2px;
+}
+
+.history {
+  margin-top: 40px;
+  text-align: start;
+}
+
+.history ul {
+  padding-inline-start: 24px;
+}
+
+.history li {
+  margin-bottom: 10px;
+}

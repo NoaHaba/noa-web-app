@@ -7,6 +7,7 @@ import { events } from "./routes/events";
 import { health } from "./routes/health";
 import { me } from "./routes/me";
 import { uploads } from "./routes/uploads";
+import { games } from "./routes/games";
 
 /**
  * This is the server. It runs on Cloudflare Workers, NOT in the browser.
@@ -31,6 +32,7 @@ app.use("/api/*", requireAuth);
 
 app.route("/api/me", me);
 app.route("/api/events", events);
+app.route("/api/games", games);
 app.route("/api/uploads", uploads);
 
 // Any /api/* URL we did not define above. Without this, an unknown API URL
