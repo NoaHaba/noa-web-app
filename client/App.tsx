@@ -24,6 +24,7 @@ const ElementsDemoPage = lazy(() => import("./pages/demos/ElementsDemoPage"));
 const VizDemoPage = lazy(() => import("./pages/demos/VizDemoPage"));
 const NotFoundPage = lazy(() => import("./pages/NotFoundPage"));
 const TicTacToePage = lazy(() => import("./pages/tic-tac-toe/TicTacToePage"));
+const NasaPage = lazy(() => import("./pages/nasa/NasaPage"));
 
 // Holds the data fetched from the server, so two pages asking for the same
 // thing only cause one request. See client/features/events/ for how it's used.
@@ -115,6 +116,7 @@ export function App() {
 
                       <Route path="*" element={<NotFoundPage />} />
                       <Route path="/tic-tac-toe" element={<TicTacToePage />} />
+                      <Route path="/nasa" element={<NasaPage />} />
                     </Route>
                   </Routes>
                 </Suspense>
