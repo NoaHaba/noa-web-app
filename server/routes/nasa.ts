@@ -1,4 +1,3 @@
-
 import { Hono } from "hono";
 import { z } from "zod";
 import {
@@ -10,7 +9,8 @@ import type { AppEnv } from "../env";
 import { fail, validate } from "../lib/errors";
 import { createAdminClient } from "../lib/supabase";
 
-const NASA_URL = "https://api.nasa.gov/planetary/apod";
+const NASA_URL =
+  "https://science.nasa.gov/wp-json/wp/v2/apod-basic";
 
 const GEMINI_URL =
   "https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash-lite:generateContent";
@@ -20,7 +20,6 @@ const pictureSchema = z.object({
   title: z.string(),
   explanation: z.string(),
   media_type: z.string(),
-  url: z.string().optional(),
   hdurl: z.string().nullish(),
 });
 
@@ -31,26 +30,27 @@ const countSchema = z.coerce.number().int().min(1).max(20);
 const explanationColumns =
   "date, hebrew_title, hebrew_summary, tags, created_at";
 
-function createNasaUrl(
-  apiKey: string,
-  params: Record<string, string>,
-): URL {
-  const url = new URL(NASA_URL);
-  url.searchParams.set("api_key", apiKey);
-
-  for (const [key, value] of Object.entries(params)) {
-    url.searchParams.set(key, value);
-  }
-
-  return url;
+function cleanHtml(html: string): string {
+  return html
+    .replace(/<[^>]*>/g, " ")
+    .replace(/&nbsp;/gi, " ")
+    .replace(/&#39;|&#x27;|&apos;/gi, "'")
+    .replace(/&quot;/gi, '"')
+    .replace(/&amp;/gi, "&")
+    .replace(/&lt;/gi, "<")
+    .replace(/&gt;/gi, ">")
+    .replace(/\s+/g, " ")
+    .trim();
 }
 
-function isValidPicture(picture: NasaPicture): boolean {
-  if (picture.media_type !== "image" || !picture.hdurl) {
-    return false;
-  }
-
-  if (picture.title.trim().toLowerCase() === "nasa science") {
+function isValidPicture(
+  picture: NasaPicture,
+): picture is NasaPicture & { hdurl: string } {
+  if (
+    picture.media_type !== "image" ||
+    !picture.hdurl ||
+    picture.title.trim().toLowerCase() === "nasa science"
+  ) {
     return false;
   }
 
@@ -66,18 +66,49 @@ function isValidPicture(picture: NasaPicture): boolean {
   }
 }
 
-async function fetchNasa(
-  apiKey: string,
-  params: Record<string, string>,
-): Promise<unknown> {
-  const response = await fetch(createNasaUrl(apiKey, params));
+async function fetchNasa(): Promise<NasaPicture[]> {
+  const response = await fetch(NASA_URL);
 
   if (!response.ok) {
-    console.error("NASA API error:", response.status);
     throw new Error(`NASA returned ${response.status}`);
   }
 
-  return response.json();
+  const raw: unknown = await response.json();
+  const items = Array.isArray(raw) ? raw : [raw];
+
+  return z.array(pictureSchema).parse(items);
+}
+
+function getUniquePictures(
+  pictures: NasaPicture[],
+): Array<NasaPicture & { hdurl: string }> {
+  const unique = new Map<
+    string,
+    NasaPicture & { hdurl: string }
+  >();
+
+  for (const picture of pictures) {
+    if (isValidPicture(picture)) {
+      unique.set(picture.date, picture);
+    }
+  }
+
+  return [...unique.values()];
+}
+
+function shufflePictures<T>(items: T[]): T[] {
+  const shuffled = [...items];
+
+  for (let i = shuffled.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+
+    [shuffled[i], shuffled[j]] = [
+      shuffled[j],
+      shuffled[i],
+    ];
+  }
+
+  return shuffled;
 }
 
 export const nasa = new Hono<AppEnv>()
@@ -96,50 +127,31 @@ export const nasa = new Hono<AppEnv>()
     }
 
     try {
-      // NASA chooses random APOD dates when count is provided.
-      const raw = await fetchNasa(c.env.NASA_API_KEY, {
-        count: "25",
-      });
+      const results = await fetchNasa();
 
-      const parsed = z.array(pictureSchema).safeParse(raw);
-
-      if (!parsed.success) {
-        console.error("Invalid NASA response:", parsed.error);
-
-        return fail(
-          c,
-          502,
-          "nasa_error",
-          "NASA returned invalid data.",
-        );
-      }
-
-      const pictures = parsed.data
-        .filter(isValidPicture)
+      const pictures = shufflePictures(
+        getUniquePictures(results),
+      )
         .slice(0, count.data)
         .map((picture) => ({
           date: picture.date,
           title: picture.title,
-          explanation: picture.explanation,
+          explanation: cleanHtml(picture.explanation),
           media_type: picture.media_type,
-          url: picture.hdurl!,
+          url: picture.hdurl,
         }));
 
       if (pictures.length === 0) {
-        console.error("NASA returned no usable pictures.");
-
         return fail(
           c,
           502,
           "nasa_error",
-          "NASA is not returning usable space pictures right now.",
+          "Could not load NASA pictures.",
         );
       }
 
       return c.json(pictures);
-    } catch (error) {
-      console.error("NASA pictures request failed:", error);
-
+    } catch {
       return fail(
         c,
         502,
@@ -155,7 +167,7 @@ export const nasa = new Hono<AppEnv>()
       const { date } = c.req.valid("json");
       const supabase = createAdminClient(c.env);
 
-      // Check the cache before calling Gemini.
+      // Return an existing explanation without calling Gemini.
       const { data: cached, error: cacheError } = await supabase
         .from("nasa_explanations")
         .select(explanationColumns)
@@ -163,8 +175,6 @@ export const nasa = new Hono<AppEnv>()
         .maybeSingle();
 
       if (cacheError) {
-        console.error("Cache lookup failed:", cacheError);
-
         return fail(
           c,
           500,
@@ -177,29 +187,30 @@ export const nasa = new Hono<AppEnv>()
         return c.json(cached);
       }
 
-      // Fetch the original NASA description using only the date.
+      // Find the exact picture requested by the browser.
       let picture: NasaPicture;
 
       try {
-        const raw = await fetchNasa(c.env.NASA_API_KEY, {
-          date,
-        });
+        const results = await fetchNasa();
 
-        const parsed = pictureSchema.safeParse(raw);
+        const matchingPicture = results.find(
+          (item) => item.date === date,
+        );
 
-        if (!parsed.success || !isValidPicture(parsed.data)) {
+        if (
+          !matchingPicture ||
+          !isValidPicture(matchingPicture)
+        ) {
           return fail(
             c,
             502,
             "nasa_error",
-            "NASA did not return a valid picture for this date.",
+            "NASA did not return the requested picture.",
           );
         }
 
-        picture = parsed.data;
-      } catch (error) {
-        console.error("NASA date lookup failed:", error);
-
+        picture = matchingPicture;
+      } catch {
         return fail(
           c,
           502,
@@ -208,7 +219,7 @@ export const nasa = new Hono<AppEnv>()
         );
       }
 
-      // Generate a Hebrew explanation using Gemini Flash.
+      // Generate a Hebrew explanation using Gemini.
       let explanation: z.infer<typeof explanationSchema>;
 
       try {
@@ -226,7 +237,7 @@ export const nasa = new Hono<AppEnv>()
                     text: `Explain this NASA Astronomy Picture of the Day in Hebrew.
 
 NASA title: ${picture.title}
-NASA description: ${picture.explanation}
+NASA description: ${cleanHtml(picture.explanation)}
 
 Requirements:
 - hebrew_title: a short Hebrew title.
@@ -273,12 +284,6 @@ Return only the requested JSON.`,
         });
 
         if (!response.ok) {
-          console.error(
-            "Gemini API failed:",
-            response.status,
-            await response.text(),
-          );
-
           return fail(
             c,
             502,
@@ -312,8 +317,6 @@ Return only the requested JSON.`,
         );
 
         if (!parsed.success) {
-          console.error("Invalid Gemini response:", parsed.error);
-
           return fail(
             c,
             502,
@@ -323,9 +326,7 @@ Return only the requested JSON.`,
         }
 
         explanation = parsed.data;
-      } catch (error) {
-        console.error("Gemini request failed:", error);
-
+      } catch {
         return fail(
           c,
           502,
@@ -334,7 +335,7 @@ Return only the requested JSON.`,
         );
       }
 
-      // Save by APOD date without overwriting an existing result.
+      // Save the explanation by its APOD date.
       const { data: saved, error: saveError } = await supabase
         .from("nasa_explanations")
         .upsert(
@@ -348,8 +349,6 @@ Return only the requested JSON.`,
         .maybeSingle();
 
       if (saveError) {
-        console.error("Saving explanation failed:", saveError);
-
         return fail(
           c,
           500,
