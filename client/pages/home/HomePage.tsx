@@ -1,77 +1,67 @@
-import { useQuery } from "@tanstack/react-query";
+
 import { Link } from "react-router";
-import { api } from "../../lib/api";
-import { useAuth } from "../../lib/auth";
 import styles from "./HomePage.module.css";
 
-type Me = { id: string; email: string };
+const projects = [
+  {
+    title: "Tic-Tac-Toe",
+    description:
+      "Play a game of misère tic-tac-toe, where making three in a row means you lose.",
+    path: "/tic-tac-toe",
+    number: "01",
+  },
+  {
+    title: "NASA Space Pictures",
+    description:
+      "Discover astronomy pictures and get simple explanations in Hebrew using AI.",
+    path: "/nasa",
+    number: "02",
+  },
+  {
+    title: "Copy That Design",
+    description:
+      "Explore a responsive design created in collaboration with a designer.",
+    path: "/design",
+    number: "03",
+  },
+];
 
-/**
- * The home page. Replace all of this with your own app.
- *
- * Once you are logged in, it shows the two halves of the system talking to
- * each other: the browser knows who you are from Supabase, and /api/me
- * proves the SERVER agrees - it checked your token before answering.
- */
 export default function HomePage() {
-  const { user } = useAuth();
-
-  const meQuery = useQuery({
-    queryKey: ["me"],
-    queryFn: () => api<Me>("/api/me"),
-    // Only ask once we know somebody is logged in.
-    enabled: Boolean(user),
-  });
-
   return (
-    <main>
-      <h2>Welcome to the Product Jam Starter Kit</h2>
-      <p>
-        Feel free to look around, edit the source code and navigate to the
-        demos. This page is client/pages/home/HomePage.tsx.
-      </p>
+    <main className={styles.home}>
+      <section className={styles.hero}>
+        <p className={styles.eyebrow}>PRODUCT JAM 2027</p>
+        <h1>Welcome to My Web App</h1>
+        <p className={styles.intro}>
+          Three projects combining interactive games, space exploration,
+          and responsive web design.
+        </p>
+      </section>
 
-      <div className={styles.logos}>
-        <img src="/huji.svg" alt="HUJI Logo" width="80" height="80" />
-        <img src="/bezalel.svg" alt="Bezalel Logo" width="80" height="80" />
-      </div>
+      <section className={styles.projects}>
+        <h2>Explore the Projects</h2>
 
-      {user ? (
-        <>
-          <p>
-            The server knows you as:{" "}
-            <strong>
-              {meQuery.isPending
-                ? "Checking..."
-                : meQuery.isError
-                  ? "Error"
-                  : meQuery.data.email}
-            </strong>
-          </p>
-          <p>
-            <Link to="/events">My events</Link>
-          </p>
-        </>
-      ) : null}
+        <div className={styles.grid}>
+          {projects.map((project) => (
+            <Link
+              key={project.path}
+              to={project.path}
+              className={styles.card}
+            >
+              <span className={styles.number}>
+                {project.number}
+              </span>
 
-      <h2>Lorem Ipsum</h2>
-      <p>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec faucibus
-        sit amet nunc nec vehicula. Fusce ornare nec nulla non imperdiet. Fusce
-        vel sodales justo. Sed efficitur arcu lorem, at iaculis odio ultricies
-        et. Duis rutrum urna nec elit bibendum, sed hendrerit nulla posuere.
-        Vestibulum vestibulum, ante non tincidunt posuere, dui arcu lacinia
-        nisl, nec rhoncus massa arcu ac ipsum. Nam congue interdum tortor, eu
-        dignissim massa scelerisque vitae.
-      </p>
-      <ul>
-        <li>
-          Aliquam maximus tellus sed lacus venenatis, ac cursus eros mollis.
-        </li>
-        <li>In id ante sed sem pharetra molestie et vitae arcu.</li>
-        <li>Cras pharetra turpis at pretium elementum.</li>
-        <li>Donec ultrices felis vel lectus auctor iaculis.</li>
-      </ul>
+              <h3>{project.title}</h3>
+              <p>{project.description}</p>
+
+              <span className={styles.cardLink}>
+                Explore project →
+              </span>
+            </Link>
+          ))}
+        </div>
+      </section>
     </main>
   );
 }
