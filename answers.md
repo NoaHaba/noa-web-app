@@ -139,7 +139,6 @@ Screenshot what came back, then remove it. What in your app protects it from
 this, and what doesn't?
 
 **Answer:**
-**Answer:**
 
 The server fetches the original title and explanation directly from NASA instead of trusting text sent by the browser. This prevents users from replacing NASA's content with manipulated text. If the server trusted browser-provided descriptions, a malicious user could influence the generated explanation and cause incorrect information to be cached in the database and shown to other users.
 

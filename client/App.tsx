@@ -1,3 +1,4 @@
+
 import { DirectionProvider } from "@base-ui/react/direction-provider";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { lazy, Suspense } from "react";
@@ -90,6 +91,11 @@ export function App() {
                           path="/events/:id/edit"
                           element={<EventEditPage />}
                         />
+                        <Route
+                          path="/tic-tac-toe"
+                          element={<TicTacToePage />}
+                        />
+                        <Route path="/nasa" element={<NasaPage />} />
                       </Route>
 
                       {/* The component gallery and the demos. Set
@@ -115,8 +121,6 @@ export function App() {
                       ) : null}
 
                       <Route path="*" element={<NotFoundPage />} />
-                      <Route path="/tic-tac-toe" element={<TicTacToePage />} />
-                      <Route path="/nasa" element={<NasaPage />} />
                     </Route>
                   </Routes>
                 </Suspense>
