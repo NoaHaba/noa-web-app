@@ -59,17 +59,17 @@ The date is unique, so each picture has only one saved explanation.
 
 - **Receives:** Optional `count` parameter (1-20, default 10).
 - **Success:** `200` with an array of pictures, including date, title, image URL and explanation.
-- **Errors:** `400` for an invalid count, `502` for a bad NASA response, `503` if NASA is unavailable.
+- **Errors:** `400` for an invalid count, `502` if NASA fails, returns invalid data, or provides no usable pictures.
 - **Tables:** None. The server fetches pictures directly from NASA.
 
 **`POST /api/nasa/explanations`** - Get a Hebrew explanation.
 
 - **Receives:** `{ date }` in `YYYY-MM-DD` format.
 - **Success:** `200` with `{ date, hebrew_title, hebrew_summary, tags }`.
-- **Errors:** `400` for an invalid date, `404` if NASA has no picture, `502` for an invalid NASA or Gemini response, `503` if an external service is unavailable, `500` for a database error.
+- **Errors:** `400` for an invalid request, `502` if NASA cannot provide the requested picture or Gemini fails or returns an invalid response, `500` for a database error.
 - **Table:** Reads and writes `nasa_explanations`.
 - **Process:** The server first checks the database. If no explanation exists, it gets the original text from NASA, asks Gemini for a Hebrew title, a simple 2-3 sentence summary and 1-5 allowed tags, validates the JSON with Zod, and saves it.
-- **Security:** The browser sends only the date. NASA and Gemini API keys stay on the server.
+- **Security:** The browser sends only the date. The Gemini API key stays on the server. NASA's new endpoint does not require an API key.
 
 ## Design Trade-off - Caching Gemini Answers
 
@@ -81,4 +81,14 @@ I chose to save explanations by APOD date. This lets users reuse existing answer
 
 ## What changed and why
 
-*To be completed after implementation. The original design will be kept unchanged.*
+NASA changed its APOD API in September 2026. The original endpoint returned placeholder images and sometimes incorrect explanations for requested dates.
+
+Following the November 8 assignment update, I switched to NASA's WordPress APOD endpoint: `https://science.nasa.gov/wp-json/wp/v2/apod-basic`.
+
+The server now uses the `X-WP-Total` response header to determine the archive size, selects random pages using `page` and `per_page`, and returns up to 20 usable pictures.
+
+For Hebrew explanations, the server requests the specific picture using its date in `YYMMDD` format. It uses `hdurl` for the image because the `url` field links to NASA's article rather than the image itself.
+
+NASA's explanations contain HTML, so the server removes the markup before displaying the text or sending it to Gemini.
+
+The existing Gemini REST integration, structured JSON output, Zod validation, and Supabase caching remain unchanged.
