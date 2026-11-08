@@ -1,3 +1,1247 @@
-.title {
-  font-size: var(--text-3xl);
+@import url("https://fonts.googleapis.com/css2?family=Alatsi&family=Arimo:wght@400;700&family=Heebo:wght@400;500;700;800;900&family=MuseoModerno:wght@500;600&display=swap");
+
+/* Mobile reference: Figma 156:22, 440 × 5116.
+   Heebo temporarily replaces Tel Aviv Modernist and TheBasics.
+   Tablet and desktop layouts extend this approved mobile reference below. */
+.page {
+  --navy: #071131;
+  --blue: #04498c;
+  --sky: #bde3ff;
+  --cream: #fbf9f5;
+  --sage: #c2d1bf;
+  --gold: #baa27e;
+  --ink: #1d1e22;
+  --heading-font: "Heebo", Arial, sans-serif;
+  --body-font: "Heebo", Arial, sans-serif;
+  max-width: none;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  background: #faf9f5;
+  color: var(--ink);
+  font-family: var(--body-font);
+  font-size: 17px;
+  line-height: 20px;
+}
+.page *,
+.page *::before,
+.page *::after {
+  box-sizing: border-box;
+}
+.content {
+  width: 100%;
+  max-width: 440px;
+  margin-inline: auto;
+  overflow: clip;
+  background: #faf9f5;
+}
+/* These wrappers add no boxes to the approved mobile layout. */
+.audienceCards,
+.flowLayout,
+.questionExample,
+.languageDetails {
+  display: contents;
+}
+.desktopCaption,
+.desktopStepNumbers {
+  display: none;
+}
+.page .displayTitle,
+.page .sectionTitle,
+.page .stepTitle {
+  margin: 0;
+  font-family: var(--heading-font);
+  font-weight: 900;
+  text-wrap: initial;
+  letter-spacing: -0.01em;
+}
+.page .displayTitle {
+  font-size: 40px;
+  line-height: 44px;
+}
+.page .sectionTitle {
+  font-size: 26px;
+  line-height: 29px;
+  letter-spacing: -0.005em;
+}
+.page .bodyText {
+  margin: 0;
+  font: 400 17px/20px var(--body-font);
+  letter-spacing: -0.01em;
+}
+.hero {
+  height: 375px;
+  position: relative;
+  background: var(--blue);
+}
+.heroCircle {
+  position: absolute;
+  top: -141px;
+  left: calc(50% - 258px);
+  max-width: none;
+}
+.heroBrand {
+  position: absolute;
+  top: 116px;
+  left: 0;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 19px;
+}
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 16.584px;
+  height: 66px;
+  font:
+    600 41.743px/66px "MuseoModerno",
+    sans-serif;
+  color: #000;
+  white-space: nowrap;
+  letter-spacing: -0.16px;
+}
+.brand > img {
+  flex: none;
+}
+.page .tagline {
+  margin: 0;
+  width: 166px;
+  text-align: center;
+  font: 400 20px/24px var(--body-font);
+  letter-spacing: -0.2px;
+}
+.intro {
+  position: relative;
+  height: 932px;
+  padding: 57px 28px 0;
+  background: linear-gradient(var(--blue), var(--blue)) top/100% 765px no-repeat;
+  color: var(--cream);
+  text-align: center;
+}
+.introCurve {
+  position: absolute;
+  top: 416px;
+  left: calc(50% - 258px);
+  max-width: none;
+}
+.intro > :not(.introCurve) {
+  position: relative;
+}
+.page .introText {
+  margin: 3px 0 40px;
+  font: 400 17px/20px var(--body-font);
+  letter-spacing: -0.17px;
+  min-height: 60px;
+}
+.comparison {
+  display: flex;
+  flex-direction: column;
+  gap: 61px;
+  align-items: center;
+}
+.comparisonGroup {
+  width: 304px;
+  max-width: 100%;
+}
+.comparisonGroup:last-child {
+  width: 301px;
+}
+.comparisonGroup > h2 {
+  text-align: right;
+  margin-bottom: 20px !important;
+}
+.bubbleGrid {
+  display: flex;
+  flex-wrap: wrap;
+  direction: ltr;
+  gap: 8px;
+}
+.bubble {
+  width: 96px;
+  height: 95.5px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.bubble > img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  max-width: none;
+}
+.bubble > span {
+  position: relative;
+  max-width: 74px;
+  text-align: center;
+  direction: rtl;
+  font: 400 17px/20px var(--body-font);
+  letter-spacing: -0.17px;
+}
+.bubble:nth-child(5) > span {
+  max-width: 55px;
+}
+.lightBubble {
+  width: 95px;
+  color: #000;
+  height: 97.5px;
+}
+.lightBubble:first-child > span {
+  max-width: 60px;
+}
+.gold {
+  color: var(--gold);
+}
+.greenText {
+  color: var(--sage);
+}
+.audience {
+  position: relative;
+  margin-top: -74px;
+  height: 1167px;
+}
+.audienceHeading {
+  position: relative;
+  width: 246px;
+  height: 246px;
+  margin: 0 auto 22.626px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.audienceHeading > img {
+  position: absolute;
+  inset: 0;
+}
+.audienceHeading > h2 {
+  position: relative;
+  margin-top: 24px !important;
+}
+.audienceCircle {
+  position: relative;
+  margin-inline: auto;
+  width: 360.228px;
+  height: 360.228px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+.astronaut {
+  left: 81.74px;
+  background: var(--navy);
+  color: var(--cream);
+}
+.audienceCopy {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 159px;
+}
+.audienceCopy > img {
+  margin-bottom: 25px;
+}
+.audienceCopy > h3 {
+  margin-bottom: 5px !important;
+}
+.astronaut .bodyText {
+  width: 141px;
+}
+.earth {
+  left: -82.26px;
+  background: var(--sky);
+  color: #000;
+}
+.earth .audienceCopy {
+  width: 197px;
+}
+.earth .bodyText {
+  width: 172px;
+}
+.orbitSymbol {
+  position: relative;
+  width: 44.23px;
+  height: 43.327px;
+  margin: 24.146px auto 21.299px;
+  direction: ltr;
+}
+.orbitSymbol img {
+  position: absolute;
+  max-width: none;
+}
+.orbitMain {
+  left: 2.48px;
+  top: 1.9px;
+  transform: scaleX(-1);
+  mask-size: 43.327px 43.328px;
+  mask-position: -1.583px -1.896px;
+  mask-repeat: no-repeat;
+}
+.orbitDetail {
+  left: 0;
+  top: 18.78px;
+  transform: rotate(-10.35deg) skewX(-4.17deg);
+}
+.orbitLine {
+  left: 5.42px;
+  top: 19.23px;
+}
+.features {
+  height: 619px;
+  background: var(--sage);
+  text-align: center;
+  padding: 50px 28px 64px;
+}
+.featureList {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 47px;
+  margin-top: 45px;
+}
+.feature {
+  width: 164px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 98px;
+}
+.feature > img {
+  flex: none;
+  margin-bottom: 20px;
+}
+.feature:first-child > img {
+  margin-top: -9px;
+  margin-bottom: 20px;
+}
+.feature:last-child {
+  min-height: 140px;
+}
+.flow {
+  padding: 64px 39px 50.729px;
+  text-align: center;
+}
+.flowTop {
+  display: flex;
+  justify-content: space-between;
+  align-items: stretch;
+  direction: ltr;
+  margin-top: 51px;
+  gap: 22px;
+}
+.phoneSlot {
+  width: 170.173px;
+  height: 368.271px;
+  flex: none;
+}
+.phone {
+  width: 170.173px;
+  height: 368.271px;
+  position: relative;
+  border-radius: 20.944px;
+  overflow: hidden;
+  text-align: left;
+  font-family: "Arimo", Arial, sans-serif;
+}
+.question,
+.answer {
+  background: #a9cdeb;
+}
+.form {
+  background: #738b6e;
+}
+.phone img {
+  position: absolute;
+  max-width: none;
+}
+.phoneIsland {
+  position: absolute;
+  top: 4.8px;
+  left: 57.597px;
+  width: 54.979px;
+  height: 15.708px;
+  border-radius: 7.854px;
+  background: #000;
+  z-index: 2;
+}
+.phoneStatus {
+  position: absolute;
+  top: 9.6px;
+  left: 13.963px;
+  right: 13.963px;
+  display: flex;
+  justify-content: space-between;
+  font-size: 6.981px;
+  font-weight: 700;
+  line-height: 9px;
+}
+.phoneMenu {
+  left: 9.231px;
+  top: 336.14px;
+  z-index: 2;
+}
+.form .phoneMenu {
+  left: 136.918px;
+  top: 327.679px;
+}
+.questionText {
+  position: absolute;
+  top: 47.997px;
+  left: 9.6px;
+  width: 152.719px;
+  font-size: 34.907px;
+  line-height: 1;
+  font-weight: 700;
+  letter-spacing: -1.3963px;
+  text-indent: 30.768px;
+}
+.answer .questionText {
+  text-indent: 27.053px;
+}
+.bryan {
+  position: absolute;
+  top: 311.547px;
+  left: 9.6px;
+  font-size: 11.345px;
+  line-height: 15px;
+  color: #3e4d5c;
+}
+.questionDot {
+  top: 54.67px;
+  left: 11.907px;
+}
+.questionBottomDot {
+  top: 307.838px;
+  left: 137.883px;
+}
+.videoPhoto {
+  width: 315.219px;
+  height: 315.219px;
+  top: 161.573px;
+  left: -8.381px;
+}
+.connection {
+  top: 55.494px;
+  left: 12.348px;
+}
+.connectionDot {
+  top: 166.903px;
+  left: 67.328px;
+}
+.socialIcons {
+  position: absolute;
+  top: 222.299px;
+  left: 140.574px;
+  display: flex;
+  flex-direction: column;
+  gap: 6.526px;
+}
+.socialIcons img {
+  position: static;
+}
+.page .steps {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  width: 168px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  direction: rtl;
+  text-align: right;
+}
+.stepTitle {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 17px;
+  line-height: 24px;
+  color: var(--navy);
+  margin-bottom: 4px !important;
+}
+.stepNumber {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex: none;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--navy);
+  color: var(--cream);
+  font:
+    400 13px/18px "Alatsi",
+    sans-serif;
+}
+.flowBottom {
+  display: flex;
+  gap: 22px;
+  direction: ltr;
+  margin-top: 72.729px;
+}
+.page .phoneExample {
+  margin: 0;
+  flex: none;
+  width: 170.173px;
+}
+.phoneExample > figcaption {
+  direction: rtl;
+  margin-bottom: 26px !important;
+}
+.brandSmall {
+  position: absolute;
+  top: 27.128px;
+  left: 58.46px;
+  display: flex;
+  align-items: center;
+  gap: 3.464px;
+  font:
+    500 8.721px/14px "MuseoModerno",
+    sans-serif;
+  color: #000;
+  white-space: nowrap;
+}
+.smallMark {
+  position: relative;
+  width: 7.564px;
+  height: 7.652px;
+}
+.smallMark img:first-child {
+  left: 0;
+  top: 2.459px;
+}
+.smallMark img:last-child {
+  left: 4.75px;
+  top: 0;
+}
+.formCircle {
+  top: 185.377px;
+  left: -36.152px;
+}
+.formQuestion {
+  position: absolute;
+  top: 77.689px;
+  left: 13.076px;
+  width: 146.148px;
+  font:
+    400 34.907px/1.05 "Alatsi",
+    sans-serif;
+  letter-spacing: -1.3963px;
+}
+.caret {
+  font-family: Arial, sans-serif;
+  font-weight: 300;
+}
+.formFields {
+  position: absolute;
+  top: 209.992px;
+  left: 44.614px;
+  display: flex;
+  flex-direction: column;
+  gap: 4.615px;
+}
+.formFields > div {
+  position: relative;
+  width: 81.535px;
+  height: 17.692px;
+}
+.formFields img {
+  left: 0;
+  top: 0;
+}
+.formFields span {
+  position: absolute;
+  left: 11.538px;
+  top: 3.846px;
+  color: #3e4d5c;
+  font:
+    400 7.692px/10px "Alatsi",
+    sans-serif;
+}
+.launch {
+  position: absolute;
+  left: 25.384px;
+  top: 291.527px;
+  width: 117.688px;
+  height: 24.195px;
+}
+.launch > img:first-child {
+  left: 0;
+  top: 0;
+}
+.launchThumb {
+  left: 0;
+  top: 0;
+  transform: scaleX(-1);
+}
+.launchArrow {
+  left: 4.45px;
+  top: 4.45px;
+  transform: rotate(45deg);
+}
+.launch > span {
+  position: absolute;
+  left: 39.229px;
+  top: 6.154px;
+  font:
+    400 9.306px/13px "Alatsi",
+    sans-serif;
+  color: #939393;
+  white-space: nowrap;
+}
+.visualLanguage {
+  padding: 40px 28px 44px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+.visualLanguage > h2 {
+  color: var(--navy);
+  text-align: right;
+}
+.diagramSlot {
+  height: 250px;
+}
+.visualDiagram {
+  position: relative;
+  width: 384px;
+  height: 250px;
+  background: var(--sky);
+  border-radius: 28px;
+  overflow: hidden;
+  direction: rtl;
+  color: var(--navy);
+  font:
+    500 15px/18px "Heebo",
+    Arial,
+    sans-serif;
+}
+.visualDiagram img {
+  position: absolute;
+  max-width: none;
+}
+.diagramBigCircle {
+  left: 104px;
+  top: 104px;
+}
+.diagramSmallCircle {
+  left: 188.174px;
+  top: 60.297px;
+}
+.diagramSpace {
+  position: absolute;
+  right: 24px;
+  top: 26px;
+}
+.diagramEarth {
+  position: absolute;
+  left: 18px;
+  top: 203px;
+}
+.diagramCamera {
+  position: absolute;
+  right: 24px;
+  top: 170px;
+  line-height: 21px;
+}
+.spaceArrow {
+  left: 246.5px;
+  top: 53.5px;
+}
+.earthArrow {
+  left: 93.5px;
+  top: 197.5px;
+}
+.palette {
+  display: flex;
+  justify-content: space-between;
+  direction: ltr;
+  gap: 4px;
+}
+.palette img {
+  flex: none;
+}
+.typography {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.typography > div {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  min-height: 24px;
+  font: 400 17px/20px var(--body-font);
+  letter-spacing: -0.17px;
+}
+.typography strong {
+  color: var(--navy);
+  font: 900 17px/24px var(--heading-font);
+}
+.typography .museo {
+  font:
+    600 17px/24px "MuseoModerno",
+    sans-serif;
+}
+.typography .alatsi {
+  font:
+    400 17px/24px "Alatsi",
+    sans-serif;
+}
+.footer {
+  position: relative;
+  height: 419px;
+  text-align: center;
+  padding-top: 159px;
+}
+.footerCircle {
+  position: absolute;
+  left: calc(50% - 258px);
+  top: 33px;
+  max-width: none;
+}
+.footerMark {
+  position: relative;
+  margin: 0 auto 49.5px;
+}
+.footer > h2 {
+  position: relative;
+  color: var(--cream);
+}
+
+/* Narrow mobile adjustments. */
+@media (min-width: 400px) and (max-width: 439px) {
+  .diagramSlot {
+    height: 234px;
+  }
+  .visualDiagram {
+    transform: scale(0.936);
+    transform-origin: top right;
+    margin-left: auto;
+  }
+}
+@media (max-width: 439px) {
+  .intro {
+    padding-inline: 20px;
+    height: auto;
+    min-height: 932px;
+  }
+  .introText {
+    min-height: 60px;
+  }
+  .comparison {
+    gap: 61px;
+  }
+  .flow {
+    padding-inline: 24px;
+  }
+  .flowTop,
+  .flowBottom {
+    gap: 16px;
+  }
+  .page .steps {
+    flex: 1;
+    min-width: 0;
+  }
+  .visualLanguage {
+    padding-inline: 20px;
+  }
+  .palette {
+    gap: 0;
+  }
+  .palette img {
+    transform: scale(0.88);
+    transform-origin: center;
+  }
+}
+@media (max-width: 399px) {
+  .flow {
+    padding-inline: 20px;
+  }
+  .phoneSlot {
+    width: 144.647px;
+    height: 313.03px;
+  }
+  .phone {
+    transform: scale(0.85);
+    transform-origin: top left;
+  }
+  .page .phoneExample {
+    width: 144.647px;
+  }
+  .step .bodyText {
+    font-size: 15px;
+    line-height: 19px;
+  }
+  .stepTitle {
+    gap: 5px;
+    font-size: 16px;
+  }
+  .diagramSlot {
+    height: 212.5px;
+  }
+  .visualDiagram {
+    transform: scale(0.85);
+    transform-origin: top right;
+    margin-left: auto;
+  }
+  .palette {
+    margin-inline: -5px;
+  }
+  .palette img {
+    margin-inline: -2px;
+  }
+  .typography > div {
+    font-size: 15px;
+  }
+  .typography strong {
+    font-size: 15px;
+  }
+}
+@media (max-width: 349px) {
+  .intro {
+    padding-inline: 12px;
+  }
+  .bubbleGrid {
+    gap: 6px;
+  }
+  .bubble {
+    width: 94px;
+  }
+  .flow {
+    padding-inline: 12px;
+  }
+  .phoneSlot {
+    width: 132.735px;
+    height: 287.251px;
+  }
+  .phone {
+    transform: scale(0.78);
+  }
+  .page .phoneExample {
+    width: 132.735px;
+  }
+  .step .bodyText {
+    font-size: 14px;
+    line-height: 18px;
+  }
+  .diagramSlot {
+    height: 182.5px;
+  }
+  .visualDiagram {
+    transform: scale(0.73);
+  }
+  .palette img {
+    margin-inline: -4px;
+    transform: scale(0.8);
+  }
+}
+
+/* Keep the audience copy inside very narrow viewports; only the decorative
+   edges of the circles extend beyond the page, as in the mobile design. */
+@media (max-width: 361px) {
+  .audienceCircle {
+    transform: translateX(max(0px, calc((360.228px - 100vw) / 2)));
+  }
+  .astronaut {
+    left: calc(50vw - 92px);
+  }
+  .earth {
+    left: calc(108px - 50vw);
+  }
+}
+
+/* Tablet: retain one vertical document, give each section room to breathe. */
+@media (min-width: 768px) {
+  .content {
+    max-width: none;
+  }
+  .heroCircle {
+    transform: scaleX(3);
+  }
+  .intro {
+    height: auto;
+    padding: 64px 32px 160px;
+    background-size: 100% calc(100% - 140px);
+  }
+  .introCurve {
+    top: auto;
+    bottom: 0;
+    transform: scaleX(3);
+  }
+  .page .introText {
+    max-width: 600px;
+    min-height: 0;
+    margin: 20px auto 56px;
+    line-height: 26px;
+  }
+  .comparison {
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 48px;
+    max-width: 840px;
+    margin-inline: auto;
+  }
+  .comparisonGroup {
+    flex: 0 1 304px;
+    min-width: 0;
+  }
+
+  .comparisonGroup:last-child {
+    flex-basis: 301px;
+  }
+  .audience {
+    height: auto;
+    margin-top: -64px;
+    padding: 0 32px 80px;
+  }
+  .audienceHeading {
+    margin-bottom: 40px;
+  }
+  .audienceCards {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: clamp(12px, 2vw, 24px);
+    max-width: 1104px;
+    margin-inline: auto;
+  }
+  .audienceCircle {
+    width: clamp(240px, calc((100vw - 180px) / 2), 300px);
+    height: auto;
+    aspect-ratio: 1;
+    flex: none;
+    margin: 0;
+    left: auto;
+  }
+  .orbitSymbol {
+    flex: none;
+    margin: 0;
+  }
+  .features {
+    height: auto;
+    padding: 64px 32px 72px;
+  }
+  .featureList {
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: space-between;
+    max-width: 960px;
+    margin: 48px auto 0;
+    gap: 40px;
+  }
+  .feature,
+  .feature:last-child {
+    flex: 1;
+    min-width: 0;
+    min-height: 0;
+  }
+  .feature > img,
+  .feature:first-child > img {
+    margin: 0 0 24px;
+  }
+  .feature .bodyText {
+    max-width: 220px;
+    line-height: 26px;
+  }
+  .flow {
+    max-width: 1200px;
+    margin-inline: auto;
+    padding: 80px 32px;
+  }
+  .flowTop {
+    width: 100%;
+    max-width: 600px;
+    margin: 48px auto 0;
+    gap: 64px;
+  }
+  .page .steps {
+    width: 280px;
+  }
+  .step .bodyText {
+    line-height: 26px;
+  }
+  .flowBottom {
+    width: 100%;
+    max-width: 600px;
+    justify-content: space-between;
+    margin: 64px auto 0;
+    gap: 64px;
+  }
+  .visualLanguage {
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 32px;
+    max-width: 1200px;
+    margin-inline: auto;
+    padding: 32px 32px 80px;
+  }
+  .visualLanguage > h2 {
+    flex-basis: 100%;
+  }
+  .visualLanguage > .bodyText {
+    flex-basis: 100%;
+    padding-inline-end: max(0px, calc(100% - 600px));
+    line-height: 26px;
+  }
+  .diagramSlot {
+    flex: 0 0 384px;
+  }
+  .languageDetails {
+    display: flex;
+    flex: 1;
+    min-width: 280px;
+    flex-direction: column;
+    gap: 32px;
+  }
+  .palette {
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    gap: 12px;
+  }
+  .typography {
+    gap: 16px;
+  }
+  .footer {
+    height: 360px;
+    padding-top: 112px;
+    overflow: hidden;
+  }
+  .footerCircle {
+    top: 0;
+    transform: scaleX(3);
+  }
+  .footerMark {
+    margin-bottom: 32px;
+  }
+}
+
+/* Compact tablets: give both comparison groups flexible widths. */
+@media (min-width: 768px) and (max-width: 819px) {
+  .comparison {
+    gap: 20px;
+  }
+
+  .comparisonGroup,
+  .comparisonGroup:last-child {
+    flex: 1 1 0;
+    width: auto;
+  }
+
+  .bubbleGrid {
+    justify-content: center;
+  }
+
+  .audience {
+    padding-inline: 20px;
+  }
+
+  .audienceCards {
+    gap: 12px;
+  }
+}
+
+/* Desktop flow: one phone and one numbered explanation per equal-width
+   column, read right to left: question form, connection, answer. */
+@media (min-width: 1200px) {
+  .heroCircle,
+  .introCurve,
+  .footerCircle {
+    transform: scaleX(5);
+  }
+  .intro {
+    padding: 80px max(48px, calc((100% - 1104px) / 2)) 176px;
+  }
+  .comparison {
+    max-width: 960px;
+  }
+  .audience {
+    padding-inline: 48px;
+    padding-bottom: 96px;
+  }
+  .audienceCards {
+    gap: 64px;
+  }
+  .audienceCircle {
+    width: clamp(300px, 24vw, 360px);
+    height: auto;
+  }
+  .features {
+    padding: 80px 48px;
+  }
+  .flow {
+    padding: 96px 48px;
+  }
+  .flowLayout {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: flex-start;
+    column-gap: 32px;
+    row-gap: 32px;
+    margin-top: 56px;
+  }
+  .flowTop,
+  .flowBottom {
+    display: contents;
+  }
+  .questionExample,
+  .page .phoneExample {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: 0 0 calc((100% - 64px) / 3);
+    width: auto;
+    min-width: 0;
+  }
+  .questionExample {
+    order: 2;
+  }
+  .phoneExample:first-child {
+    order: 3;
+  }
+  .phoneExample:last-child {
+    order: 1;
+  }
+  .desktopCaption,
+  .phoneExample > figcaption {
+    display: none;
+  }
+  .page .steps {
+    order: 4;
+    flex: 0 0 100%;
+    width: auto;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: flex-start;
+    gap: 32px;
+  }
+  .step {
+    flex: 1;
+    min-width: 0;
+    padding-top: 16px;
+    border-top: 2px solid var(--blue);
+  }
+  .step:first-child {
+    flex: 1;
+    border-color: var(--navy);
+  }
+  .stepTitle {
+    margin-bottom: 12px !important;
+  }
+  .visualLanguage {
+    padding: 32px 48px 96px;
+    column-gap: clamp(32px, 5vw, 80px);
+  }
+  .diagramSlot {
+    flex-grow: 1;
+  }
+  .languageDetails {
+    flex: 0 1 448px;
+  }
+  .palette {
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    gap: 8px;
+  }
+
+  /* Desktop refinements: preserve the approved visual design. */
+/* Bring the comparison groups closer together */
+  .comparison {
+    max-width: 850px;
+    gap: 64px;
+    justify-content: center;
+  }
+
+  .comparisonGroup,
+  .comparisonGroup:last-child {
+    width: calc(3 * clamp(96px, 7.2vw, 108px) + 20px);
+  }
+
+  /* Make the comparison circles more prominent */
+  .bubbleGrid {
+    gap: 10px;
+  }
+
+  .bubble,
+  .lightBubble {
+    width: clamp(96px, 7.2vw, 108px);
+    height: auto;
+    aspect-ratio: 1;
+  }
+
+  .bubble > img {
+    width: 100%;
+    height: 100%;
+  }
+
+  /* Enlarge the three phone mockups without
+     changing their internal Figma proportions */
+  .phoneSlot {
+    width: 198px;
+    height: 428px;
+  }
+
+  .phone {
+    transform: scale(1.16);
+    transform-origin: top left;
+  }
+
+  /* Give the larger mockups enough breathing room */
+  .flowLayout {
+    row-gap: 48px;
+  }
+}
+
+/* Comparison layout: three circles per row on tablets and desktops. */
+@media (min-width: 768px) {
+  .comparison {
+    --comparison-circle-size: clamp(96px, 8vw, 124px);
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: flex-start;
+    justify-content: center;
+    gap: clamp(24px, 5vw, 88px);
+    width: 100%;
+    max-width: none;
+    margin-inline: auto;
+  }
+
+  .comparisonGroup,
+  .comparisonGroup:last-child {
+    flex: 0 0 auto;
+    width: max-content;
+    max-width: none;
+  }
+
+  .bubbleGrid {
+    display: grid;
+    grid-template-columns: repeat(3, var(--comparison-circle-size));
+    gap: clamp(8px, 0.8vw, 12px);
+    justify-content: center;
+  }
+
+  .bubble,
+  .lightBubble {
+    width: var(--comparison-circle-size);
+    height: auto;
+    aspect-ratio: 1;
+  }
+
+  .bubble > img {
+    width: 100%;
+    height: 100%;
+  }
+
+  .bubble > span {
+    max-width: 85%;
+    font-size: clamp(17px, 1.3vw, 20px);
+    line-height: 1.2;
+  }
 }
